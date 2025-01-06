@@ -1,0 +1,4 @@
+/* File: app.css in ./src folder */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
