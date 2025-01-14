@@ -1,0 +1,9 @@
+OhneTrinkgeld = 50
+SollTrinkgeld = 55
+IstTrinkgeld = 53
+
+
+
+Abweichung = sqr(((((IstTrinkgeld-SollTrinkgeld)/ OhneTrinkgeld)*100)^2))
+
+
