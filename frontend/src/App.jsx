@@ -1,12 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext} from 'react';
+import { createContext } from 'react';
 import axios from 'axios';
 import './App.css';
+
+const isStartedContext = createContext(false);
 
 function App() {
   const [isStarted, setIsStarted] = useState(false);
   const [gameData, setGameData] = useState(null);
   const [isReset, setIsReset] = useState(false);
   const [currentTip, setCurrentTip] = useState(""); // Initialize as an empty string
+  const [test, setTest] = useState("This is test 1");
+  const [test2, setTest2] = useState("This is test 2");
 
   async function startGame(event) {
     event.preventDefault();
@@ -67,6 +72,7 @@ function App() {
   // Pass currentTip to Content and handleSubmit
   return (
     <>
+    <isStartedContext.Provider value={{"value1":test, "value2":test2}}>
       <Header />
       <Content
         currentTip={currentTip}
@@ -75,6 +81,7 @@ function App() {
         handleTipChange={handleTipChange}
         handleSubmit={(e) => handleSubmit(e, currentTip, setCurrentTip)} // Pass currentTip here
       />
+</isStartedContext.Provider>
     </>
   );
 }
@@ -101,6 +108,8 @@ function Content({ gameState, handleTipChange, currentTip, handleSubmit, setCurr
           
         </button>
       </form>
+      <div>{useContext(isStartedContext).value1}</div>
+      <div>{useContext(isStartedContext).value2}</div>
     </div>
   );
   if (gameState === false) {
