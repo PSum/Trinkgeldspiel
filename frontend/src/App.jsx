@@ -1,9 +1,10 @@
 import { useEffect, useState, useContext} from 'react';
+import Header from './functions/Header'
 import { createContext } from 'react';
 import axios from 'axios';
 import './App.css';
 
-const isStartedContext = createContext(false);
+export const AppContext = createContext();
 
 function App() {
   const [isStarted, setIsStarted] = useState(false);
@@ -13,15 +14,6 @@ function App() {
   const [test, setTest] = useState("This is test 1");
   const [test2, setTest2] = useState("This is test 2");
 
-  async function startGame(event) {
-    event.preventDefault();
-    try {
-      const response = await axios.get("http://localhost:3000/api/startGame");
-      setGameData(response.data.values);
-    } catch (err) {
-      console.error("Cannot start game: " + err);
-    }
-  }
 
   // React to gameData updates
   useEffect(() => {
@@ -41,29 +33,7 @@ function App() {
     }
   }, [isReset]);
 
-  function resetGame () {
-    setIsReset(true);
-    setCurrentTip("");
-  }
 
-  function Header() {
-    return (
-      <div className="flex flex-col prose">
-        <h1 className="flex justify-center m-0">Trinkgeldspiel</h1>
-        <div className="flex justify-around">
-          <button className="btn btn-primary" onClick={startGame}>
-            Start game
-          </button>
-          <button className="btn btn-secondary" onClick={resetGame}>
-            Reset game
-          </button>
-        </div>
-        <div className="flex justify-center">
-          Game started? {isStarted.toString()}
-        </div>
-      </div>
-    );
-  }
 
   function handleTipChange(e) {
     setCurrentTip(e.target.value);
@@ -71,18 +41,18 @@ function App() {
 
   // Pass currentTip to Content and handleSubmit
   return (
-    <>
-    <isStartedContext.Provider value={{"value1":test, "value2":test2}}>
-      <Header />
-      <Content
-        currentTip={currentTip}
-        setCurrentTip={setCurrentTip}
-        gameState={isStarted}
-        handleTipChange={handleTipChange}
-        handleSubmit={(e) => handleSubmit(e, currentTip, setCurrentTip)} // Pass currentTip here
-      />
-</isStartedContext.Provider>
-    </>
+  <>
+<AppContext.Provider value={{ isStarted, setGameData, setIsReset, setCurrentTip }}>
+    <Header />
+    <Content
+      currentTip={currentTip}
+      setCurrentTip={setCurrentTip}
+      gameState={isStarted}
+      handleTipChange={handleTipChange}
+      handleSubmit={(e) => handleSubmit(e, currentTip, setCurrentTip)} // Pass currentTip here
+    />
+</AppContext.Provider>
+  </>
   );
 }
 
@@ -94,7 +64,7 @@ function handleSubmit(e, currentTip, setCurrentTip) {
 
 function Content({ gameState, handleTipChange, currentTip, handleSubmit, setCurrentTip}) {
   const gameArea = (
-    <div className='prose flex justify-center flex-col'>
+    <div className="prose flex justify-center flex-col">
       <p>Schätze den Zahlbetrag inklusive Trinkgeld</p>
       <form onSubmit={handleSubmit}>
         <input
@@ -104,12 +74,12 @@ function Content({ gameState, handleTipChange, currentTip, handleSubmit, setCurr
           value={currentTip}
           onChange={handleTipChange}
         />
-        <button type="submit">
-          
-        </button>
+        <button type="submit"></button>
       </form>
-      <div>{useContext(isStartedContext).value1}</div>
-      <div>{useContext(isStartedContext).value2}</div>
+      {
+        //      <div>{useContext(isStartedContext).value1}</div>
+        //      <div>{useContext(isStartedContext).value2}</div>
+      }
     </div>
   );
   if (gameState === false) {

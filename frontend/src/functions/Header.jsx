@@ -1,0 +1,42 @@
+import { useEffect, useState, useContext} from 'react';
+import axios from 'axios';
+import { AppContext } from '../App';
+
+export default function Header() {
+  const isStarted = useContext(AppContext).isStarted;
+  const setGameData = useContext(AppContext).setGameData
+  const setIsReset = useContext(AppContext).setIsReset
+  const setCurrentTip = useContext(AppContext).setCurrentTip
+
+  return (
+    <div className="flex flex-col prose">
+      <h1 className="flex justify-center m-0">Trinkgeldspiel</h1>
+      <div className="flex justify-around">
+        <button className="btn btn-primary" onClick={(event) => startGame(event, setGameData)}>
+          Start game
+        </button>
+        <button className="btn btn-secondary" onClick={(event) => {resetGame(event, setIsReset, setCurrentTip)}}>
+          Reset game
+        </button>
+      </div>
+      <div className="flex justify-center">
+        Game started? {isStarted.toString()}
+      </div>
+    </div>
+  );
+}
+
+async function startGame(event, setGameData) {
+  event.preventDefault();
+  try {
+    const response = await axios.get("http://localhost:3000/api/startGame");
+    setGameData(response.data.values);
+  } catch (err) {
+    console.error("Cannot start game: " + err);
+  }
+}
+
+function resetGame(event, setIsReset, setCurrentTip) {
+  setIsReset(true);
+  setCurrentTip("");
+}
