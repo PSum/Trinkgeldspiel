@@ -3,11 +3,13 @@ import axios from 'axios';
 import { AppContext } from '../App';
 
 export default function Header() {
-  const isStarted = useContext(AppContext).isStarted;
-  const setGameData = useContext(AppContext).setGameData
-  const setIsReset = useContext(AppContext).setIsReset
-  const setCurrentTip = useContext(AppContext).setCurrentTip
+    const { isStarted, setIsStarted, gameData, setGameData, isReset, setIsReset, currentTip, setCurrentTip, index, setIndex, fieldEmpty, setFieldEmpty, answers, setAnswers } = useContext(AppContext);
 
+function resetGame() {
+  setIsReset(true);
+  setCurrentTip("");
+  setAnswers([]);
+}
   return (
     <div className="flex flex-col prose">
       <h1 className="flex justify-center m-0">Trinkgeldspiel</h1>
@@ -15,7 +17,7 @@ export default function Header() {
         <button className="btn btn-primary" onClick={(event) => startGame(event, setGameData)}>
           Start game
         </button>
-        <button className="btn btn-secondary" onClick={(event) => {resetGame(event, setIsReset, setCurrentTip)}}>
+        <button className="btn btn-secondary" onClick={(event) => {resetGame()}}>
           Reset game
         </button>
       </div>
@@ -34,9 +36,4 @@ async function startGame(event, setGameData) {
   } catch (err) {
     console.error("Cannot start game: " + err);
   }
-}
-
-function resetGame(event, setIsReset, setCurrentTip) {
-  setIsReset(true);
-  setCurrentTip("");
 }

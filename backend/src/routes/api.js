@@ -45,6 +45,7 @@ router.post("/analyzeGame", (req, res) => {
         console.log(`Das Trinkgeld soll für den Betrag ${istWert} € berechnet werden \n Der richtige Wert wäre: ${sollWert} € \n Der Spieler hat ${playerInput} € geschätzt - Die Abweichung liegt damit bei ${AbweichungProzent} %`)
     }
 );
+// Change code so it sends the analyzed data to the user
       res.send("data received");
 
   } catch (err) {

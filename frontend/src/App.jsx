@@ -14,6 +14,7 @@ function App() {
   const [currentTip, setCurrentTip] = useState(""); // Initialize as an empty string
   const [index, setIndex] = useState(0);
   const [fieldEmpty, setFieldEmpty] = useState(false);
+  const [answers, setAnswers] = useState([]);
 
   // React to gameData updates
   useEffect(() => {
@@ -36,7 +37,7 @@ function App() {
   // Pass currentTip to Content and handleSubmit
   return (
   <>
-<AppContext.Provider value={{ isStarted, setIsStarted, gameData, setGameData, isReset, setIsReset, currentTip, setCurrentTip, index, setIndex, fieldEmpty, setFieldEmpty }}>
+<AppContext.Provider value={{ isStarted, setIsStarted, gameData, setGameData, isReset, setIsReset, currentTip, setCurrentTip, index, setIndex, fieldEmpty, setFieldEmpty, answers, setAnswers }}>
     <Header />
     <Content/>
 </AppContext.Provider>
