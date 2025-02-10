@@ -36,17 +36,19 @@ router.get('/startGame', (req, res) => {
 router.post("/analyzeGame", (req, res) => {
   try {
     const { values, answers } = req.body;
+    const analyzedData = [];
     values.forEach((istWert, index) => {
       istWert = parseFloat(istWert);
       const playerInput = parseFloat(answers[index]);
       const sollWert = (istWert * 1.1).toFixed(1); // 10 % Trinkgeld soll gegeben werden
       const AbweichungProzent =
         (((((playerInput - sollWert) / istWert) * 100) ** 2) ** 0.5).toFixed(1);
-        console.log(`Das Trinkgeld soll für den Betrag ${istWert} € berechnet werden \n Der richtige Wert wäre: ${sollWert} € \n Der Spieler hat ${playerInput} € geschätzt - Die Abweichung liegt damit bei ${AbweichungProzent} %`)
+        // console.log(`Das Trinkgeld soll für den Betrag ${istWert} € berechnet werden \n Der richtige Wert wäre: ${sollWert} € \n Der Spieler hat ${playerInput} € geschätzt - Die Abweichung liegt damit bei ${AbweichungProzent} %`)
+        analyzedData.push(AbweichungProzent);
     }
 );
 // Change code so it sends the analyzed data to the user
-      res.send("data received");
+      res.status(200).send(analyzedData);
 
   } catch (err) {
     console.error(err);
