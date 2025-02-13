@@ -35,7 +35,7 @@ export default function Content() {
             answers: answers,
           }
         );
-        console.log(response);
+        console.log(response.data);
       } catch (err) {
         console.error("Can't analyze game" + err);
       }

@@ -31,6 +31,7 @@ function resetGame() {
 async function startGame(event, setGameData) {
   event.preventDefault();
   try {
+    // wrap this into a separate file an make it available everywhere
     const response = await axios.get("http://localhost:3000/api/startGame");
     setGameData(response.data.values);
   } catch (err) {
