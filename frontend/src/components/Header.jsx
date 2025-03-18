@@ -4,12 +4,13 @@ import { AppContext } from '../App';
 import { startGame } from '../utils/api'
 
 export default function Header() {
-    const { isStarted, setIsStarted, gameData, setGameData, isReset, setIsReset, currentTip, setCurrentTip, index, setIndex, fieldEmpty, setFieldEmpty, answers, setAnswers } = useContext(AppContext);
+    const { isStarted, setIsStarted, gameData, setGameData, isReset, setIsReset, currentTip, setCurrentTip, index, setIndex, fieldEmpty, setFieldEmpty, answers, setAnswers, endGame, setEndGame } = useContext(AppContext);
 
 function resetGame() {
   setIsReset(true);
   setCurrentTip("");
   setAnswers([]);
+  setEndGame(false);
 }
   return (
     <div className="flex flex-col prose">

@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext} from 'react';
 import Header from './components/Header'
 import Content from './components/Content'
+import Results from './components/Results'
 import { createContext } from 'react';
 import axios from 'axios';
 import './App.css';
@@ -15,6 +16,8 @@ function App() {
   const [index, setIndex] = useState(0);
   const [fieldEmpty, setFieldEmpty] = useState(false);
   const [answers, setAnswers] = useState([]);
+  const [endGame, setEndGame] = useState(false);
+  const [result, setResult] = useState([]);
 
   // React to gameData updates
   useEffect(() => {
@@ -37,9 +40,10 @@ function App() {
   // Pass currentTip to Content and handleSubmit
   return (
   <>
-<AppContext.Provider value={{ isStarted, setIsStarted, gameData, setGameData, isReset, setIsReset, currentTip, setCurrentTip, index, setIndex, fieldEmpty, setFieldEmpty, answers, setAnswers }}>
+<AppContext.Provider value={{ isStarted, setIsStarted, gameData, setGameData, isReset, setIsReset, currentTip, setCurrentTip, index, setIndex, fieldEmpty, setFieldEmpty, answers, setAnswers, endGame, setEndGame, result, setResult }}>
     <Header />
     <Content/>
+    <Results/>
 </AppContext.Provider>
   </>
   );

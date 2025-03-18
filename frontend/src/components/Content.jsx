@@ -3,7 +3,7 @@ import { AppContext } from "../App";
 import axios from 'axios'
 
 export default function Content() {
-    const { isStarted, setIsStarted, gameData, setGameData, isReset, setIsReset, currentTip, setCurrentTip, index, setIndex, fieldEmpty, setFieldEmpty, answers, setAnswers } = useContext(AppContext);
+    const { isStarted, setIsStarted, gameData, setGameData, isReset, setIsReset, currentTip, setCurrentTip, index, setIndex, fieldEmpty, setFieldEmpty, answers, setAnswers, endGame, setEndGame, result, setResult } = useContext(AppContext);
 
     function handleTipChange(e) {
     setCurrentTip(e.target.value);
@@ -36,6 +36,7 @@ export default function Content() {
           }
         );
         console.log(response.data);
+        setResult(response.data.meanDeviation)
       } catch (err) {
         console.error("Can't analyze game" + err);
       }
@@ -46,13 +47,17 @@ export default function Content() {
         console.log(index);
         console.log('We reached index 4!');
         setIndex(0);
+        // Theres a bug where it only counts to index 4
         setAnswers([]);
         evaluateResults()
+        setEndGame(true)
+        setIsStarted(false)
       }
     }, [index])
 
     useEffect(() => {
       console.log(answers)
+      console.log(endGame)
     }, [answers])
 
   const gameArea = (
@@ -73,6 +78,7 @@ export default function Content() {
       {fieldEmpty && <div className="alert alert-error">"Please enter a number before submitting"</div>}
     </div>
   );
+
   if (isStarted === false) {
     return <></>;
   } else {
